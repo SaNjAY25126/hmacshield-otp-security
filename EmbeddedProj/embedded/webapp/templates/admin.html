@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Admin overview &middot; HMACShield{% endblock %}
+{% block content %}
+<section class="page-heading"><div><span class="eyebrow">USER ACCOUNT MONITOR</span><h2>Admin <em>overview</em></h2><p>Registered accounts and recorded authentication activity.</p></div><form method="post" action="{{ url_for('admin_logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="button secondary">Sign out</button></form></section>
+{% if db_error %}<div class="alert danger">The app could not read its SQLite database. Check the Flask terminal for details.</div>{% else %}
+<section class="stats-grid"><article class="stat-card"><span>REGISTERED ACCOUNTS</span><strong>{{ total_users }}</strong><small>Local user records</small></article><article class="stat-card"><span>SUCCESSFUL LOGINS</span><strong>{{ total_logins }}</strong><small>All recorded sessions</small></article></section>
+{% set chart_endpoint = url_for('admin_activity_counts') %}
+{% set chart_title = 'Authentication records' %}
+{% set chart_subtitle = 'Login, sign-out, and OTP verification activity across all accounts' %}
+{% include 'activity_charts.html' %}
+<script src="{{ url_for('static', filename='activity-chart.js') }}" defer></script>
+<a class="text-link" href="{{ url_for('monitoring') }}">Open live security monitor -&gt;</a>
+<section class="panel"><div class="panel-heading"><div><h3>Registered users</h3><p>Data source: {{ db_filename }}</p></div></div><div class="table-scroll"><table><thead><tr><th>Name</th><th>Email</th><th>Registered (India time)</th></tr></thead><tbody>{% for user in users %}<tr><td><strong>{{ user.name }}</strong></td><td>{{ user.email }}</td><td>{{ format_ist(user.created_at) }}</td></tr>{% else %}<tr><td colspan="3">No registered users in database {{ db_filename }}.</td></tr>{% endfor %}</tbody></table></div></section>
+<section class="panel"><div class="panel-heading"><div><h3>Successful login history</h3><p>India time · 24-hour clock</p></div></div><div class="table-scroll"><table><thead><tr><th>User</th><th>Email</th><th>Login time</th></tr></thead><tbody>{% for event in login_events %}<tr><td><strong>{{ event.name }}</strong></td><td>{{ event.email }}</td><td class="mono">{{ format_ist(event.created_at) }}</td></tr>{% else %}<tr><td colspan="3">No successful logins recorded yet.</td></tr>{% endfor %}</tbody></table></div></section>
+{% endif %}{% endblock %}

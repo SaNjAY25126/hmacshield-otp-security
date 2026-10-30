@@ -1,0 +1,27 @@
+<section class="panel activity-dashboard" aria-labelledby="activity-chart-title" data-activity-chart data-endpoint="{{ chart_endpoint }}">
+  <div class="activity-dashboard-heading">
+    <div><span class="eyebrow">EVENT ANALYTICS / LAST 7 DAYS</span><h3 id="activity-chart-title">{{ chart_title }}</h3><p>{{ chart_subtitle }}</p></div>
+    <span class="event-status" data-chart-status>Connecting to live activity…</span>
+  </div>
+  <div class="activity-chart-grid">
+    <article class="activity-viz-card">
+      <div class="activity-viz-title"><div><span class="eyebrow">DISTRIBUTION</span><h4>Authentication events</h4></div><span class="viz-badge">ALL TIME</span></div>
+      <div class="donut-layout">
+        <div class="activity-donut" data-donut role="img" aria-label="Authentication event distribution">
+          <div class="activity-donut-center"><strong data-total-events>0</strong><span>EVENTS</span></div>
+        </div>
+        <div class="activity-donut-legend">
+          <div data-legend-event="Successful login"><i class="login"></i><span>Successful logins</span><b>0</b></div>
+          <div data-legend-event="Logout"><i class="logout"></i><span>Sign-outs</span><b>0</b></div>
+          <div data-legend-event="OTP verified"><i class="otp"></i><span>OTP verifications</span><b>0</b></div>
+        </div>
+      </div>
+      <p class="chart-caption">Counts are calculated from recorded authentication events.</p>
+    </article>
+    <article class="activity-viz-card activity-trend-card">
+      <div class="activity-viz-title"><div><span class="eyebrow">ACTIVITY TREND</span><h4>Events by day</h4></div><span class="viz-badge">IST / 7 DAYS</span></div>
+      <div class="activity-svg-wrap"><svg data-activity-bars viewBox="0 0 700 240" role="img" aria-label="Daily login, sign-out, and OTP verification events"></svg></div>
+      <div class="activity-chart-legend"><span><i class="login"></i>Logins</span><span><i class="logout"></i>Sign-outs</span><span><i class="otp"></i>OTP verifications</span></div>
+    </article>
+  </div>
+</section>

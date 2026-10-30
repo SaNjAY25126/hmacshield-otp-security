@@ -1,0 +1,9 @@
+build/
+*.exe
+authentication.log
+.env
+webapp/.env
+webapp/__pycache__/
+webapp/users.sqlite3
+webapp/users.sqlite3-*
+webapp/.pytest-tmp/

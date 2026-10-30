@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Account overview &middot; HMACShield{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div><span class="eyebrow">HMACSHIELD / PROTECTED ACCOUNT</span><h2>Welcome, <em>{{ user.name }}</em></h2><p>Signed in with your password and a verified custom OTP challenge.</p></div>
+  <span class="live-pill"><i></i> AUTHENTICATED</span>
+</section>
+<section class="stats-grid">
+  <article class="stat-card"><span>ACCOUNT</span><strong class="account-name">{{ user.email }}</strong><small>Verified user identity</small></article>
+  <article class="stat-card"><span>OTP SECURITY</span><strong>HKDF + HMAC</strong><small>60-second one-time challenge</small></article>
+  <article class="stat-card"><span>SESSION</span><strong>ACTIVE</strong><small>Protected route access</small></article>
+</section>
+{% set chart_endpoint = url_for('user_activity_counts') %}
+{% set chart_title = 'Your authentication activity' %}
+{% set chart_subtitle = 'Login, sign-out, and OTP verification activity for your account' %}
+{% include 'activity_charts.html' %}
+<script src="{{ url_for('static', filename='activity-chart.js') }}" defer></script>
+<section class="panel"><div class="panel-heading"><div><h3>Recent account activity</h3><p>Latest security events for your account</p></div><a class="text-link" href="{{ url_for('activity') }}">View all activity -&gt;</a></div>{% if activities %}<div class="table-scroll"><table><thead><tr><th>Event</th><th>Details</th><th>Time (IST)</th></tr></thead><tbody>{% for item in activities %}<tr><td>{{ item.event }}</td><td>{{ item.details }}</td><td class="mono">{{ item.created_at|india_time }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="muted">No activity has been recorded yet.</p>{% endif %}</section>
+{% endblock %}
